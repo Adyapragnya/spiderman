@@ -1,19 +1,17 @@
-# Use the official Node.js image as the base
+# Dockerfile for the Node.js backend
 FROM node:16-alpine
 
 # Set the working directory inside the container
 WORKDIR /app
 
-# Copy package.json and package-lock.json to leverage Docker caching
+# Copy the package.json and install dependencies
 COPY package*.json ./
+RUN npm install
 
-# Install dependencies using npm ci for faster and deterministic builds
-RUN npm ci
-
-# Copy the rest of the application files into the container
+# Copy the rest of the application files
 COPY . .
 
-# Expose the backend API port (5000)
+# Expose the backend API port
 EXPOSE 5000
 
 # Start the Node.js server
